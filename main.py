@@ -16,6 +16,7 @@ attempts_left = max_attempts
 # Множество для хранения уже введенных букв
 guessed_letters = set()
 
+
 hangman_images = [
     '''
        -----
