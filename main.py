@@ -81,3 +81,45 @@ def display_game():
     print('Текущее слово: ' + ' '.join(guessed_word))
     print(f'Оставшиеся попытки: {attempts_left}')
     print(f'Использованные буквы: {", ".join(sorted(guessed_letters))}')
+
+
+def play_game():
+    """
+    Основная функция для проведения игры. Игрок вводит буквы, пытаясь угадать слово,
+    получая штрафы за ошибки. Игра продолжается до тех пор, пока не будут угаданы все буквы
+    или не закончится количество попыток.
+    """
+    global attempts_left
+
+    # Игровой цикл, пока есть попытки
+    while attempts_left > 0:
+        # Отображаем текущее состояние игры
+        display_game()
+
+        # Получаем ввод от игрока
+        guess = input('Введите букву: ').lower()
+
+        # Проверка на корректность ввода
+        if not guess.isalpha() or len(guess) != 1:
+            print("Введите только одну букву.")
+            continue
+
+        # Проверка на повторный ввод буквы
+        if guess in guessed_letters:
+            print("Эта буква уже была введена.")
+            continue
+
+        # Добавляем букву в список использованных
+        guessed_letters.add(guess)
+
+        # Если буква есть в слове, обновляем состояние
+        if guess in word_to_guess:
+            for i in range(len(word_to_guess)):
+                if word_to_guess[i] == guess:
+                    guessed_word[i] = guess
+            print("Угадали букву!")
+        else:
+            # Если буквы нет в слове, уменьшаем количество попыток
+            attempts_left -= 1
+            print(f"Ошибка! Буквы {guess} нет в слове.")
+
